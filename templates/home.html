@@ -1,0 +1,20 @@
+{% extends "layout.html" %} {% block title %}Home{% endblock %} {% block head %}
+{{ super() }}
+<style type="text/css">
+  .important {
+    color: #336699;
+  }
+</style>
+{% endblock %} {% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="jumbotron mt-3">
+      <h1>BO Project</h1>
+      <p class="lead">
+        Project is designed to show information from a controller.
+      </p>
+      <a class="btn btn-lg btn-primary" href="/sensor" role="button">Sensor</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

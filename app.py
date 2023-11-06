@@ -8,7 +8,7 @@ import logging
 #
 # Modules
 #
-from mongo import GetDatabase
+from sdk.mongo import GetDatabase
 #
 # Setup Logging
 #
@@ -37,7 +37,7 @@ def getHome():
   #
   # Return Home Page
   #
-  return "Bo Application"
+  return render_template("home.html")
 #
 # Setup Http(Get) Info
 #
@@ -59,16 +59,20 @@ def getInfo():
 #
 # Setup Http(Put) sensor information
 #
-@app.get("/api/sensor")
+@app.get("/sensor")
 def getSensor():
   #
   # Get Sensor Data
   #
   _data = list(database.sensor.find({}))
   #
+  # Return Home Page
+  #
+  return render_template("sensor.html", data=_data)  
+  #
   # Return HttpResponse Object with info.
   #
-  return Response(dumps(_data), status=200,  mimetype="application/json")
+  #return Response(dumps(_data), status=200,  mimetype="application/json")
 
 #
 # Setup Http(Put) sensor information
