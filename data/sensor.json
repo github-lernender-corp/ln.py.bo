@@ -1,0 +1,25 @@
+[
+  {
+    "type": 664,
+    "num": 2,
+    "fields": [
+       {"name": "Voltage", "unit": "V", "decPrecision": 3},
+       {"name": "Current", "unit": "A", "decPrecision": 1}
+    ],
+    "properties": [
+      { "id": "L1", "name": "Meter1"},
+      { "id": "L2", "name": "Meter2"}
+    ]
+  },
+  {
+    "type": 665,
+    "num": 1,
+    "fields": [
+       {"name": "Temperature", "unit": "C", "decPrecision": 1},
+       {"name": "Humidity",    "unit": "%", "decPrecision": 1}
+    ],
+    "properties": [
+      { "id": "6102", "name": "Server-Rack"}
+    ]
+  }
+]
