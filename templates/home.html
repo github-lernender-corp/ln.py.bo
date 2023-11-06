@@ -8,12 +8,42 @@
 {% endblock %} {% block content %}
 <div class="container-fluid">
   <div class="row">
-    <div class="jumbotron mt-3">
-      <h1>BO Project</h1>
-      <p class="lead">
-        Project is designed to show information from a controller.
-      </p>
-      <a class="btn btn-lg btn-primary" href="/sensor" role="button">Sensor</a>
+    <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+      <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">{{data.name}}</h1>
+        <p class="col-md-8 fs-4">Project is designed to show information from a controller.</p>
+        <a class="btn btn-lg btn-primary" href="/sensor" role="button">Sensor data >></a>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">&nbsp;</td>
+            <th scope="col">&nbsp;</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>App</td>
+            <td>{{data.name}}</td>
+          </tr>
+          <tr>
+            <td>University</td>
+            <td>{{data.university}}</td>
+          </tr>            
+          <tr>
+            <td>Class</td>
+            <td>{{data.class}}</td>
+          </tr>  
+          <tr>
+            <td>Instructor</td>
+            <td>{{data.instructor}} ({{data.title}})</td>
+          </tr> 
+          <tr>
+            <td>Author</td>
+            <td>{{data.author}}</td>
+          </tr>                                        
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

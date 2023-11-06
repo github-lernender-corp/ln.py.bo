@@ -35,27 +35,13 @@ def getHome():
   #    
   app.logger.info("Route: /")
   #
-  # Return Home Page
-  #
-  return render_template("home.html")
-#
-# Setup Http(Get) Info
-#
-@app.get("/api/info")
-def getInfo():
-  #
-  # Log Route
-  #    
-  app.logger.info("Route: /api/info")
-  #
   # Get information
   #
-  info = list(database.info.find({}))
+  info = list(database.info.find({}))  
   #
-  # Return HttpResponse Object with info.
+  # Return Home Page
   #
-  return Response(dumps(info), status=200,  mimetype="application/json")
-
+  return render_template("home.html", data=info[0])
 #
 # Setup Http(Put) sensor information
 #
@@ -73,6 +59,24 @@ def getSensor():
   # Return HttpResponse Object with info.
   #
   #return Response(dumps(_data), status=200,  mimetype="application/json")
+
+#
+# Setup Http(Get) Info
+#
+@app.get("/api/info")
+def getInfo():
+  #
+  # Log Route
+  #    
+  app.logger.info("Route: /api/info")
+  #
+  # Get information
+  #
+  info = list(database.info.find({}))
+  #
+  # Return HttpResponse Object with info.
+  #
+  return Response(dumps(info), status=200,  mimetype="application/json")
 
 #
 # Setup Http(Put) sensor information
