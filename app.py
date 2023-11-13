@@ -6,7 +6,7 @@ import logging
 #
 # Modules
 #
-from sdk.sqlClient import QueryUser
+from sdk.sqlClient import QueryUser, UpdateUser
 #
 # Setup Logging
 #
@@ -37,6 +37,37 @@ def getTeam():
     # Get User Data
     #
     users = QueryUser()
+    #
+    # Update Single Team Member
+    #
+    users[4].last = 'Larkins'
+    #
+    # Get User Data
+    #
+    UpdateUser(users[4])
+  
+    #
+    # Return Home Page
+    #
+    return render_template("team.html", len=len(users), data=users)
+
+#
+# Http(Get) sensor information
+#
+@app.put("/team")
+def putTeam():
+    #
+    # Get User Data
+    #
+    users = QueryUser()
+    #
+    # Update Single Team Member
+    #
+    users[4].last = 'Larkins'
+    #
+    # Get User Data
+    #
+    UpdateUser(users[4])
     #
     # Return Home Page
     #

@@ -50,7 +50,7 @@ def QueryUser():
   #  
   SQL_QUERY = """
     SELECT 
-    x.First, x.Last 
+    x.Id, x.First, x.Last 
     FROM [dbo].[User] x 
     ORDER BY  x.Last, x.First;
     """
@@ -67,7 +67,7 @@ def QueryUser():
   #  
   rows = cursor.fetchall()
   for r in rows:
-    users.append(User(r.First, r.Last))
+    users.append(User(r.Id, r.First, r.Last))
   #
   # Close Cursor
   #
@@ -85,7 +85,6 @@ def QueryUser():
 # Get list of users
 #
 def UpdateUser(user):
-  users = []
   #
   # Get a connection
   #
@@ -95,32 +94,31 @@ def UpdateUser(user):
   #  
   SQL_QUERY = """
     UPDATE [dbo].[User] 
-    SET First = ,
-    Last = ;
+    SET First= ?,
+    Last= ?
+    WHERE Id= ?;
     """
   #
   # Get a cursor()
   #  
-  cursor = conn.cursor()
+  cursor = conn.cursor()    
   #
   # Execute Statement
   #
-  cursor.execute(SQL_QUERY)
+  cursor.execute(SQL_QUERY, user.first, user.last, user.id)
   #
-  # Get all Rows
-  #  
-  rows = cursor.fetchall()
-  for r in rows:
-    users.append(User(r.First, r.Last))
+  # Commit Changes
+  #
+  cursor.commit()
   #
   # Close Cursor
   #
-  cursor.close()
+  cursor.close()  
   #
   # Close Connection
   #  
   conn.close()
   #
-  # Return Users
+  # Return user
   #
-  return users
+  return user
