@@ -4,9 +4,8 @@ import pyodbc
 # Modules
 #
 from model.user import User
-  
 #
-# Get a handle to the database
+# Get database connection
 #
 def GetConnection():
   #
@@ -23,23 +22,23 @@ def GetConnection():
       isinstance(database, str) and
       isinstance(user, str) and
       isinstance(password, str)):
-
+    #
+    # Construct Connection String
+    #
     connectionString = f'DRIVER={{ODBC Driver 18 for SQL Server}};SERVER={server};DATABASE={database};UID={user};PWD={password};Encrypt=no;TrustServerCertificate=no;'
-       
     #
     # Log the connection string and database
     #
-    # print(f'server: {server}')    
-    # print(f'database: {database}')    
-    # print(f'user: {user}')    
-    # print(f'password: {password}')    
-    print(f'connectionString: {connectionString}')    
-
- 
+    print(f'connectionString: {connectionString}') 
+    #
+    #   Return database connection string
+    #
     return pyodbc.connect(connectionString)
   
   return None
-
+#
+# Get list of users
+#
 def QueryUser():
   users = []
   #
@@ -51,11 +50,9 @@ def QueryUser():
   #  
   SQL_QUERY = """
     SELECT 
-    TOP 5 x.First, x.Last 
-    FROM 
-    [dbo].[User] x 
-    ORDER BY 
-    x.Last, x.First;
+    x.First, x.Last 
+    FROM [dbo].[User] x 
+    ORDER BY  x.Last, x.First;
     """
   #
   # Get a cursor()
@@ -71,7 +68,6 @@ def QueryUser():
   rows = cursor.fetchall()
   for r in rows:
     users.append(User(r.First, r.Last))
-  
   #
   # Close Cursor
   #
@@ -80,7 +76,50 @@ def QueryUser():
   # Close Connection
   #  
   conn.close()
-  
+  #
+  # Return Users
+  #
+  return users
+
+#
+# Get list of users
+#
+def UpdateUser(user):
+  users = []
+  #
+  # Get a connection
+  #
+  conn = GetConnection()
+  #
+  # Construct SQL Statement
+  #  
+  SQL_QUERY = """
+    UPDATE [dbo].[User] 
+    SET First = ,
+    Last = ;
+    """
+  #
+  # Get a cursor()
+  #  
+  cursor = conn.cursor()
+  #
+  # Execute Statement
+  #
+  cursor.execute(SQL_QUERY)
+  #
+  # Get all Rows
+  #  
+  rows = cursor.fetchall()
+  for r in rows:
+    users.append(User(r.First, r.Last))
+  #
+  # Close Cursor
+  #
+  cursor.close()
+  #
+  # Close Connection
+  #  
+  conn.close()
   #
   # Return Users
   #
