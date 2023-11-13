@@ -87,8 +87,6 @@ def errorHandler(e):
 #
 # GetErrorCodeMessage
 #
-
-
 def errorCodeMessage(code):
     """Return more descriptive error code."""
     if code == 400:
