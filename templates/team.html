@@ -1,0 +1,26 @@
+{% extends "layout.html" %} {% block title %}Sensor{% endblock %} {% block head
+  %} {{ super() }}
+  <style type="text/css">
+    .important {
+      color: #336699;
+    }
+  </style>
+  {% endblock %} 
+  {% block content %}
+  <div class="col-sm-12 col-xs-12 mt-4 border">
+    <div class="card">
+      <div class="card-header">
+        <h3>Team Members</h3>
+      </div>
+      <div class="card-body">
+        {%for i in range(0, len)%} 
+          <div class="row">
+            <div class="col-6">{{data[i].first}}</div>
+            <div class="col-6">{{data[i].last}}</div>
+          </div>
+        {%endfor%}
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+  

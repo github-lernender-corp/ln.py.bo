@@ -2,13 +2,11 @@
 from flask import Flask, Response, request, json, jsonify, make_response, render_template
 from werkzeug.exceptions import HTTPException
 from dotenv import load_dotenv
-from bson.json_util import dumps
-from bson.objectid import ObjectId
 import logging
 #
 # Modules
 #
-from sdk.mongo import GetDatabase
+from sdk.sqlClient import QueryUser
 #
 # Setup Logging
 #
@@ -22,84 +20,42 @@ load_dotenv()
 #
 app = Flask(__name__)
 #
-# Get a handle to the database
-#
-database = GetDatabase()
-#
 # Http(Get) Home
 #
 @app.get("/")
 def getHome():
-  #
-  # Log Route
-  #    
-  app.logger.info("Route: /")
-  #
-  # Get information
-  #
-  info = list(database.info.find({}))  
-  #
-  # Return Home Page
-  #
-  return render_template("home.html", data=info[0])
+    #
+    # Return Home Page
+    #
+    return render_template("home.html", data={})
 #
-# Setup Http(Put) sensor information
+# Http(Get) sensor information
+#
+@app.get("/team")
+def getTeam():
+    #
+    # Get User Data
+    #
+    users = QueryUser()
+    #
+    # Return Home Page
+    #
+    return render_template("team.html", len=len(users), data=users)
+
+#
+# Http(Get) sensor information
 #
 @app.get("/sensor")
 def getSensor():
-  #
-  # Get Sensor Data
-  #
-  _data = list(database.sensor.find({}))
-  #
-  # Return Home Page
-  #
-  return render_template("sensor.html", data=_data)  
-  #
-  # Return HttpResponse Object with info.
-  #
-  #return Response(dumps(_data), status=200,  mimetype="application/json")
+    #
+    # Get Sensor Data
+    #
+    data = [] #QuerySensor()
+    #
+    # Return Home Page
+    #
+    return render_template("sensor.html", len=len(data), data=data)
 
-#
-# Setup Http(Get) Info
-#
-@app.get("/api/info")
-def getInfo():
-  #
-  # Log Route
-  #    
-  app.logger.info("Route: /api/info")
-  #
-  # Get information
-  #
-  info = list(database.info.find({}))
-  #
-  # Return HttpResponse Object with info.
-  #
-  return Response(dumps(info), status=200,  mimetype="application/json")
-
-#
-# Setup Http(Put) sensor information
-#
-@app.put("/api/sensor")
-def putSensor():
-  #
-  # Get sensor Id
-  #
-  id = request.args.get('id')
-  #
-  # Destructor json payload
-  #
-  _data = request.json
-  #
-  # Update the sensor data
-  #
-  database.sensor.update_one({"_id": ObjectId(id)}, {"$set": _data})
-  #
-  # Return HttpResponse Object with info.
-  #
-  return Response(dumps(_data), status=200,  mimetype="application/json")
-  
 #
 # Error Handling for Response Codes
 #
@@ -121,8 +77,8 @@ def errorHandler(e):
     })
     #
     # Log Error
-    #  
-    app.logger.error(jsonify(resp.data));
+    #
+    app.logger.error(jsonify(resp.data))
     #
     # Return Response
     #
@@ -131,6 +87,8 @@ def errorHandler(e):
 #
 # GetErrorCodeMessage
 #
+
+
 def errorCodeMessage(code):
     """Return more descriptive error code."""
     if code == 400:
@@ -141,7 +99,7 @@ def errorCodeMessage(code):
         return "Internal Server Error"
     else:
         return "Unknown error!"
-      
-      
+
+
 if __name__ == "__main__":
-  app.run(host="0.0.0.0", port=int("5000"), debug=True)
+    app.run(host="0.0.0.0", port=int("5000"), debug=True)
