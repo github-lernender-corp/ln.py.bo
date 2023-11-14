@@ -40,7 +40,7 @@ def getTeam():
     #
     # Update Single Team Member
     #
-    users[4].last = 'Larkins'
+    users[4].last = 'Lovelidge'
     #
     # Get User Data
     #
