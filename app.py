@@ -2,6 +2,8 @@
 from flask import Flask, Response, request, json, jsonify, make_response, render_template
 from werkzeug.exceptions import HTTPException
 from dotenv import load_dotenv
+from bson.json_util import dumps
+from bson.objectid import ObjectId
 import logging
 #
 # Modules
@@ -38,18 +40,13 @@ def getTeam():
     #
     users = QueryUser()
     #
-    # Update Single Team Member
-    #
-    users[4].last = 'Lovelidge'
-    #
-    # Get User Data
-    #
-    UpdateUser(users[4])
-  
-    #
     # Return Home Page
     #
-    return render_template("team.html", len=len(users), data=users)
+    # return render_template("team.html", len=len(users), data=users)
+    #
+    # Return HttpResponse Object with info.
+    #
+    return Response(dumps(users[0]), status=200,  mimetype="application/json")
 
 #
 # Http(Get) sensor information
